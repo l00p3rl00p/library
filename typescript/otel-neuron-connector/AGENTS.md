@@ -1,19 +1,38 @@
-# AGENTS.md — OTel Neuron Connector
+# Agent reference — Neuron Connector library
 
-## Scope
-- Maintain a standalone, framework-independent library. The native DSH Cordis plugin is a separate consumer.
-- Reuse, improve, or extend V1 seams. Never recreate an OTel Collector, OTLP protocol, exporter pipeline, or database.
-- Build and test one working observation chain before adding inputs or destinations.
+This repository is a **public, standalone library**. Treat every committed file, comment, test fixture, example, issue, release, and artifact as publicly visible.
 
-## Checks before editing or publishing
-1. Inspect files and `git status`; preserve unrelated work.
-2. Check tool availability: `node`, `npm`, `tsc`, `shellcheck`, `gitleaks`, `git-secrets`.
-3. Run `npm test`, `npm pack --dry-run`, and `python test/marimo_equivalent.py`.
-4. For changed shell scripts, run `bash -n` and ShellCheck.
-5. Scan working files and Git history with available Gitleaks; run configured git-secrets where installed. Missing tools are NOT RUN, never PASS.
-6. Inspect `git diff --check`, stage only intended files, and review Actions results.
-7. Never commit secrets or live endpoints with credentials.
-8. Never claim end-to-end ClickHouse persistence without verifying a unique record in the actual ClickHouse store.
+## Scope and neutrality
 
-## Git discipline
-Test → scan → commit → package → inspect manifest and checksum → publish. Do not rewrite history or overwrite repositories. Pin tested library dependencies only at the consumer/plugin release boundary.
+- This is a reusable capability library, **not** a project assignment, deployment, application, or plugin.
+- An agent's authorized application instructions determine what to connect, observe, retain, route, and publish. Do not assume a particular provider, private repository, system, runtime, or workflow.
+- Keep the core independent of consumers. Application-specific integration belongs in separate adapters or consuming applications.
+- Describe the Neuron Connector's general mechanism in source-neutral terms; treat any particular telemetry transport as one possible adapter, not the entire theory.
+- Reuse proven interfaces and libraries rather than recreating collectors, protocol implementations, routing systems, or data stores.
+- Build and verify one actual input → connector → output chain before extending inputs and then outputs.
+
+## Public-repository information boundaries
+
+- **Never publish or reference private repositories, unpublished project paths, internal service names, credentials, session identifiers, hostnames, internal URLs, or internal architecture.**
+- Do not copy private source, chat transcripts, operational logs, screenshots, tokens, or configuration into documentation, examples, issues, test fixtures, commits, package metadata, or release archives.
+- Examples and tests must use generic names, non-sensitive fixtures, and public standards. Avoid using private-source data even if it can be anonymized.
+- If a request draws on private or connected material, extract only the general reusable interface or mechanism. The private origin is not library documentation.
+- Do not invent source identifiers, connections, relationship facts, capabilities, or verification results. Distinguish observed behavior from proposed design.
+- Credit any **public** upstream implementations and respect their licenses; do not expose a private source in the name of attribution.
+- Do not automatically commit or push material from an agent conversation. Check authorization and the exact destination first.
+
+## Before changing or publishing
+
+1. Inspect current source, tests, public documentation, and `git status`; keep changes surgical.
+2. Check availability of `node`, `npm`, TypeScript compiler, `shellcheck`, `gitleaks`, and `git-secrets`. Missing tools are **NOT RUN**, not PASS.
+3. Run `npm test` and `npm pack --dry-run`; run the notebook's executable test when affected.
+4. Run `bash -n` and ShellCheck on changed shell scripts.
+5. Run available secret scanners on files and Git history, then review the diff and package contents for private references and metadata. Treat a clean secret scan as necessary, not sufficient, for public-safe content.
+6. Run `git diff --check`; stage only intended files. Preserve independent Git history.
+7. Require direct execution evidence for claims of transport acceptance, receiver delivery, or durable storage. Tests of an in-process interface do not prove a remote destination.
+
+## Release discipline
+
+Inspect → make the smallest useful change → test → scan → review → commit → package → verify package contents and checksum → publish when authorized.
+
+Maintain independent semantic versions and public API contracts. Consumers adopt tested dependency versions separately. Do not rewrite Git history or silently alter consumer deployments.
